@@ -56,11 +56,6 @@
         .result, .timer {
             margin-top: 15px;
         }
-
-        /* Hide the tool form initially until password is validated */
-        #toolForm, .stock-info, .restock {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -74,11 +69,9 @@
         <h1>PREMIUM ACCOUNTS GEN BY ZANE</h1>
         <p>If you have any issues, you can contact me on Discord: <strong>zane_ox0</strong></p>
 
-        <!-- Password Protected Form -->
         <form id="toolForm">
             <label for="password">Enter Password:</label>
             <input type="password" id="password" required>
-            <p id="passwordError" style="color: red; display: none;">Incorrect Password. Please try again.</p>
 
             <label for="accountType">Select Account Type:</label>
             <select id="accountType" required>
@@ -93,6 +86,7 @@
             </select>
 
             <button type="submit" id="generateButton">Generate Account</button>
+            <button type="button" id="regenButton" style="display: none;">Regenerate</button>
         </form>
 
         <div class="result" id="result"></div>
@@ -140,42 +134,6 @@
             isMuted = !isMuted;
         });
 
-        // Password validation
-        const correctPassword = "zanethegodcracking";
-        const toolForm = document.getElementById('toolForm');
-        const passwordInput = document.getElementById('password');
-        const passwordError = document.getElementById('passwordError');
-        const stockInfo = document.querySelector('.stock-info');
-        const restockSection = document.querySelector('.restock');
-
-        // Listen for form submission
-        toolForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            if (passwordInput.value === correctPassword) {
-                // If the password is correct, unlock the form
-                passwordError.style.display = 'none'; // Hide the error message
-                stockInfo.style.display = 'block'; // Show stock information
-                restockSection.style.display = 'block'; // Show restock section
-
-                // Proceed with generating accounts (rest of the form logic remains unchanged)
-                const accountType = document.getElementById('accountType').value;
-                const accounts = stockData[accountType];
-
-                if (accounts && accounts.length > 0) {
-                    // Pop the first account from the stock
-                    const account = accounts.shift();
-                    document.getElementById('result').textContent = `Generated ${accountType} account: ${account}`;
-                    displayStock();
-                } else {
-                    document.getElementById('result').textContent = `No ${accountType} accounts left in stock.`;
-                }
-            } else {
-                // If the password is incorrect, show an error message
-                passwordError.style.display = 'block';
-            }
-        });
-
         // Account data stored manually in the script
         const stockData = {
             steam: ['steam_user1:password1', 'steam_user2:password2'],
@@ -202,9 +160,27 @@
 
         // Call the function to display stock
         window.onload = displayStock;
+
+        // Update stock after generating account
+        document.getElementById('toolForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const accountType = document.getElementById('accountType').value;
+            const accounts = stockData[accountType];
+
+            if (accounts && accounts.length > 0) {
+                // Pop the first account from the stock
+                const account = accounts.shift();
+
+                // Display the generated account
+                document.getElementById('result').textContent = `Generated ${accountType} account: ${account}`;
+                
+                // Update stock display
+                displayStock();
+            } else {
+                document.getElementById('result').textContent = `No ${accountType} accounts left in stock.`;
+            }
+        });
     </script>
 </body>
 </html>
-
-
-
