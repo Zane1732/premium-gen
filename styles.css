@@ -1,0 +1,57 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #f00; /* Red text color */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2px solid #f00; /* Red border */
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); /* Red shadow */
+    perspective: 1000px; /* Add perspective for 3D effect */
+}
+
+h1, p {
+    color: #f00; /* Red text color */
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+input[type="password"], input[type="number"], select, button, input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #f00; /* Red border */
+    border-radius: 5px;
+    background-color: #222;
+    color: #f00; /* Red text color */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="file"] {
+    padding: 10px;
+}
+
+input[type="password"]:focus, input[type="number"]:focus, select:focus, button:focus, input[type="file"]:focus {
+    transform: scale(1.05); /* Slightly scale up on focus */
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7); /* Enhance shadow on focus */
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #f00; /* Red background */
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    transition
