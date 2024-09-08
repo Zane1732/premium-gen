@@ -2,25 +2,57 @@ const PASSWORD = "zanethegodcracker";
 const RESTOCK_PASSWORD = "restock"; // Password for restocking
 
 const ACCOUNTS = {
-    steam: [],
-    netflix: [],
-    vpn: [],
-    roblox: [],
-    games: [],
-    valorant: [],
-    crunchyroll: [],
-    random: []
+    steam: [
+        
+    ],
+    netflix: [
+        // Existing accounts
+    ],
+    vpn: [
+        // Existing accounts
+    ],
+    roblox: [
+        // Existing accounts
+    ],
+    games: [
+        // Existing accounts
+    ],
+    valorant: [
+        // Existing accounts
+    ],
+    crunchyroll: [
+        // Existing accounts
+    ],
+    random: [
+        // Existing accounts
+    ],
+    amazon: [   // New category
+        // Add accounts here
+    ],
+    hulu: [     // New category
+        // Add accounts here
+    ],
+    disney: [   // New category
+        // Add accounts here
+    ],
+    spotify: [  // New category
+        // Add accounts here
+    ]
 };
 
 const STOCK_COUNT = {
-    steam: 0,
-    netflix: 0,
-    vpn: 0,
-    roblox: 0,
-    games: 0,
-    valorant: 0,
-    crunchyroll: 0,
-    random: 0
+    steam: ACCOUNTS.steam.length,
+    netflix: ACCOUNTS.netflix.length,
+    vpn: ACCOUNTS.vpn.length,
+    roblox: ACCOUNTS.roblox.length,
+    games: ACCOUNTS.games.length,
+    valorant: ACCOUNTS.valorant.length,
+    crunchyroll: ACCOUNTS.crunchyroll.length,
+    random: ACCOUNTS.random.length,
+    amazon: ACCOUNTS.amazon.length,  // New category
+    hulu: ACCOUNTS.hulu.length,      // New category
+    disney: ACCOUNTS.disney.length,  // New category
+    spotify: ACCOUNTS.spotify.length // New category
 };
 
 let userLastGenerationTime = {};
@@ -62,7 +94,7 @@ document.getElementById('toolForm').addEventListener('submit', async function(ev
     userLastGenerationTime[accountType] = currentTime;
     clearInterval(timerInterval); // Clear any existing timer
 
-    if (ACCOUNTS[accountType].length > 0) {
+    if (ACCOUNTS[accountType] && ACCOUNTS[accountType].length > 0) {
         const account = ACCOUNTS[accountType].shift();
         STOCK_COUNT[accountType]--;
         resultDiv.innerHTML = `<p>Generated ${accountType} account: ${account.id}/${account.pass}</p>`;
