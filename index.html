@@ -22,11 +22,11 @@
             /* Add other container styles */
         }
 
-        .restock {
+        .stock-info {
             margin-top: 20px;
         }
 
-        .stock-info {
+        .restock {
             margin-top: 20px;
         }
     </style>
@@ -66,7 +66,8 @@
             <ul id="stockList"></ul>
         </div>
 
-        <div class="restock" id="restockSection">
+        <!-- Restock Section (Admin Only) -->
+        <div class="restock" id="restockSection" style="display: none;">
             <h2>Restock Section</h2>
             <form id="restockForm">
                 <label for="restockPassword">Enter Restock Password:</label>
@@ -106,58 +107,83 @@
             event.target.unMute();
         }
 
-        // JavaScript to handle restock functionality
-        document.getElementById('restockForm').addEventListener('submit', function(event) {
+        // JavaScript to handle form submission and account generation
+        document.getElementById('toolForm').addEventListener('submit', function(event) {
             event.preventDefault();
             
-            const password = document.getElementById('restockPassword').value;
-            const fileInput = document.getElementById('restockFileInput');
-
-            if (password !== 'restock') {
-                alert('Incorrect restock password!');
-                return;
-            }
-
-            if (fileInput.files.length === 0) {
-                alert('Please select a file!');
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const formData = new FormData();
-            formData.append('restockFile', file);
-            formData.append('password', password);
-
-            fetch('/uploadStock', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    updateStockInfo(data.stock);
-                    document.getElementById('restockResult').innerText = 'Stock uploaded successfully!';
-                } else {
-                    document.getElementById('restockResult').innerText = 'Failed to upload stock!';
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('restockResult').innerText = 'Error uploading stock!';
-            });
+            const password = document.getElementById('password').value;
+            const accountType = document.getElementById('accountType').value;
+            
+            fetch(`/generateAccount?password=${password}&accountType=${accountType}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('result').innerText = `Generated Account: ${data.account}`;
+                        document.getElementById('regenButton').style.display = 'inline';
+                        startTimer();
+                    } else {
+                        document.getElementById('result').innerText = 'Failed to generate account!';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('result').innerText = 'Error generating account!';
+                });
         });
+
+        function startTimer() {
+            let timer = 5; // 5 seconds slowmode
+            const timerElement = document.getElementById('timer');
+            const interval = setInterval(() => {
+                if (timer <= 0) {
+                    clearInterval(interval);
+                    timerElement.innerText = '';
+                    document.getElementById('generateButton').disabled = false;
+                } else {
+                    timerElement.innerText = `Please wait ${timer--}s before generating another account.`;
+                }
+            }, 1000);
+        }
+
+        // Fetch stock information
+        function fetchStockInfo() {
+            fetch('/stockInfo')
+                .then(response => response.json())
+                .then(data => {
+                    updateStockInfo(data.stock);
+                })
+                .catch(error => {
+                    console.error('Error fetching stock info:', error);
+                });
+        }
 
         function updateStockInfo(stock) {
             const stockList = document.getElementById('stockList');
             stockList.innerHTML = '';
-
+            
             for (const [type, accounts] of Object.entries(stock)) {
                 const listItem = document.createElement('li');
                 listItem.innerText = `${type}: ${accounts.length} accounts`;
                 stockList.appendChild(listItem);
             }
         }
+
+        // Check if admin is logged in to show restock section
+        function checkAdminAccess() {
+            // Simple client-side check (not secure, for demonstration)
+            const adminPassword = prompt('Enter admin password:');
+            if (adminPassword === 'admin_password') { // Replace 'admin_password' with your actual password
+                document.getElementById('restockSection').style.display = 'block';
+            }
+        }
+
+        // Call function to check admin access
+        checkAdminAccess();
+
+        // Fetch stock information on page load
+        fetchStockInfo();
     </script>
 </body>
 </html>
+
 
