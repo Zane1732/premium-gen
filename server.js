@@ -1,35 +1,51 @@
+// server.js
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
+// Configure multer for file uploads
 const upload = multer({ dest: 'uploads/' });
-const stockData = {}; // Store stock data in memory or use a database
 
-app.use(express.json());
-app.use(express.static('public')); // Serve static files from the "public" directory
+// Serve static files (like your HTML, CSS, JS)
+app.use(express.static('public'));
 
-// Endpoint to generate an account
-app.get('/generateAccount', (req, res) => {
-    const { password, accountType } = req.query;
+// Endpoint to upload stock file
+app.post('/upload', upload.single('stockFile'), (req, res) => {
+    const filePath = req.file.path;
+    const fileName = req.file.originalname;
 
-    // Implement password checking and account generation logic here
-    // For demonstration, we'll just return a mock account
-    if (password === 'your_password') {
-        const accounts = stockData[accountType] || [];
-        if (accounts.length > 0) {
-            const account = accounts.pop();
-            stockData[accountType] = accounts; // Update stock data
-            res.json({ success: true, account: `${account.id}:${account.pass}` });
-        } else {
-            res.json({ success: false, message: 'Out of stock!' });
+    // Read file and save data
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(500).send('Error reading file.');
         }
-    } else {
-        res.json({ success: false });
-    }
+
+        // Save data to a file or in-memory data store
+        fs.writeFile(path.join(__dirname, 'stocks', fileName), data, err => {
+            if (err) {
+                return res.status(500).send('Error saving file.');
+            }
+            res.send('File uploaded and saved.');
+        });
+    });
 });
 
-// Endpoint to upload stock data
+// Endpoint to get stock data
+app.get('/stocks/:fileName', (req, res) => {
+    const filePath = path.join(__dirname, 'stocks', req.params.fileName);
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            return res.status(404).send('File not found.');
+        }
+        res.send(data);
+    });
+});
+
+app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+});
