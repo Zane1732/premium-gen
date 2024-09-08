@@ -20,8 +20,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1; /* Ensure it stays behind other content */
-            opacity: 0.6; /* Adjust opacity if needed */
+            z-index: -1;
+            opacity: 0.6;
         }
 
         .container {
@@ -127,16 +127,16 @@
             isMuted = !isMuted;
         });
 
-        // Stock management
+        // Account data stored manually in the script
         const stockData = {
-            steam: 10,
-            netflix: 8,
-            vpn: 5,
-            roblox: 7,
-            games: 3,
-            valorant: 12,
-            crunchyroll: 9,
-            random: 5
+            steam: ['steam_user1:password1', 'steam_user2:password2'],
+            netflix: ['netflix_user1:password1', 'netflix_user2:password2'],
+            vpn: ['vpn_user1:password1', 'vpn_user2:password2'],
+            roblox: ['roblox_user1:password1', 'roblox_user2:password2'],
+            games: ['game_user1:password1'],
+            valorant: ['valorant_user1:password1', 'valorant_user2:password2'],
+            crunchyroll: ['crunchyroll_user1:password1'],
+            random: ['random_user1:password1', 'random_user2:password2']
         };
 
         // Display stock information
@@ -144,9 +144,9 @@
             const stockList = document.getElementById('stockList');
             stockList.innerHTML = ''; // Clear previous stock list
 
-            for (const [accountType, count] of Object.entries(stockData)) {
+            for (const [accountType, accounts] of Object.entries(stockData)) {
                 const listItem = document.createElement('li');
-                listItem.textContent = `${accountType.charAt(0).toUpperCase() + accountType.slice(1)}: ${count} accounts`;
+                listItem.textContent = `${accountType.charAt(0).toUpperCase() + accountType.slice(1)}: ${accounts.length} accounts`;
                 stockList.appendChild(listItem);
             }
         }
@@ -159,10 +159,17 @@
             e.preventDefault();
 
             const accountType = document.getElementById('accountType').value;
-            if (stockData[accountType] > 0) {
-                stockData[accountType]--;
+            const accounts = stockData[accountType];
+
+            if (accounts && accounts.length > 0) {
+                // Pop the first account from the stock
+                const account = accounts.shift();
+
+                // Display the generated account
+                document.getElementById('result').textContent = `Generated ${accountType} account: ${account}`;
+                
+                // Update stock display
                 displayStock();
-                document.getElementById('result').textContent = `Generated ${accountType} account!`;
             } else {
                 document.getElementById('result').textContent = `No ${accountType} accounts left in stock.`;
             }
@@ -170,4 +177,5 @@
     </script>
 </body>
 </html>
+
 
