@@ -1,64 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PREMIUM ACCOUNTS GEN BY ZANE</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Account Generator</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        .accounts {
+            margin-top: 10px;
+        }
+        button {
+            padding: 5px 10px;
+            margin-left: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>PREMIUM ACCOUNTS GEN BY ZANE</h1>
-        <p>If you have any issues, you can contact me on Discord: <strong>zane_ox0</strong></p>
+    <h1>Account Generator</h1>
 
-        <form id="toolForm">
-            <label for="password">Enter Password:</label>
-            <input type="password" id="password" required>
+    <form id="toolForm">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br><br>
 
-            <label for="accountType">Select Account Type:</label>
-            <select id="accountType" required>
-                <option value="steam">Steam Accounts</option>
-                <option value="netflix">Netflix Accounts</option>
-                <option value="vpn">VPN Accounts</option>
-                <option value="roblox">Roblox Accounts</option>
-                <option value="games">Games Accounts</option>
-                <option value="valorant">Valorant Accounts</option>
-                <option value="crunchyroll">Crunchyroll Accounts</option>
-                <option value="random">Random Account</option>
-            </select>
+        <label for="accountType">Account Type:</label>
+        <select id="accountType" name="accountType">
+            <option value="steam">Steam</option>
+            <option value="netflix">Netflix</option>
+            <option value="vpn">VPN</option>
+            <option value="roblox">Roblox</option>
+            <option value="games">Games</option>
+            <option value="valorant">Valorant</option>
+            <option value="crunchyroll">Crunchyroll</option>
+            <option value="random">Random</option>
+            <option value="amazon">Amazon</option>
+            <option value="hulu">Hulu</option>
+            <option value="disney">Disney</option>
+            <option value="spotify">Spotify</option>
+        </select><br><br>
 
-            <button type="submit" id="generateButton">Generate Account</button>
-            <button type="button" id="regenButton" style="display: none;">Regenerate</button>
-        </form>
+        <button type="submit" id="generateButton">Generate Account</button>
+        <button type="button" id="regenButton" style="display:none;">Re-Generate</button>
+    </form>
 
-        <div class="result" id="result"></div>
+    <div id="result"></div>
+    <div id="timer"></div>
 
-        <div class="timer" id="timer"></div> <!-- Countdown timer display -->
+    <h2>Account Stock</h2>
+    <ul id="stockList"></ul>
 
-        <div class="stock-info" id="stockInfo">
-            <h2>Stock Information</h2>
-            <ul id="stockList">
-                <!-- Stock counts will be dynamically updated here -->
-            </ul>
-        </div>
+    <h2>Restock Accounts</h2>
+    <form id="restockForm">
+        <label for="restockPassword">Restock Password:</label>
+        <input type="password" id="restockPassword" name="restockPassword" required><br><br>
 
-        <div class="restock" id="restockSection">
-            <h2>Restock Section</h2>
-            <form id="restockForm">
-                <label for="restockPassword">Enter Restock Password:</label>
-                <input type="password" id="restockPassword" required>
-                
-                <label for="restockFileInput">Upload Restock File:</label>
-                <input type="file" id="restockFileInput" accept=".txt">
-                
-                <button type="submit" id="restockButton">Upload Accounts</button>
-            </form>
-            <div id="restockResult" class="result"></div>
-        </div>
-    </div>
+        <label for="restockFileInput">Upload Accounts File:</label>
+        <input type="file" id="restockFileInput" name="restockFileInput" accept=".txt" required><br><br>
 
-    <script src="script.js"></script>
+        <button type="submit">Restock</button>
+    </form>
+    <div id="restockResult"></div>
+
+    <!-- Ensure there's no restock logo here -->
 </body>
 </html>
-
-
