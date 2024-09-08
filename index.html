@@ -46,7 +46,7 @@
 </head>
 <body>
     <!-- Background Video -->
-    <iframe id="background-video" class="background-video" src="https://www.youtube.com/embed/tx1Qrped3L4?autoplay=1&loop=1&playlist=tx1Qrped3L4" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <div id="video-container" class="background-video"></div>
 
     <!-- Mute/Unmute Button -->
     <button id="muteButton" class="mute-button">Mute</button>
@@ -95,30 +95,4 @@
                 <label for="restockFileInput">Upload Restock File:</label>
                 <input type="file" id="restockFileInput" accept=".txt">
                 
-                <button type="submit" id="restockButton">Upload Accounts</button>
-            </form>
-            <div id="restockResult" class="result"></div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-    <script>
-        // JavaScript to handle mute/unmute functionality
-        const videoFrame = document.getElementById('background-video');
-        const muteButton = document.getElementById('muteButton');
-
-        let isMuted = false;
-
-        muteButton.addEventListener('click', () => {
-            if (isMuted) {
-                videoFrame.src = videoFrame.src.replace('mute=1', 'mute=0');
-                muteButton.textContent = 'Mute';
-            } else {
-                videoFrame.src = videoFrame.src.replace('mute=0', 'mute=1');
-                muteButton.textContent = 'Unmute';
-            }
-            isMuted = !isMuted;
-        });
-    </script>
-</body>
-</html>
+                <button type="submit" id="restockButton
