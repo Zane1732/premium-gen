@@ -29,11 +29,27 @@
             z-index: 1;
             /* Add other container styles */
         }
+
+        .mute-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f00;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1; /* Ensure it stays above the video */
+        }
     </style>
 </head>
 <body>
     <!-- Background Video -->
     <div id="video-container" class="background-video"></div>
+
+    <!-- Mute/Unmute Button -->
+    <button id="muteButton" class="mute-button">Mute</button>
 
     <div class="container">
         <h1>PREMIUM ACCOUNTS GEN BY ZANE</h1>
@@ -95,13 +111,7 @@
                 height: '100%',
                 width: '100%',
                 videoId: 'tx1Qrped3L4',
-                playerVars: {
-                    'autoplay': 1,
-                    'controls': 0,  // Hide controls
-                    'mute': 0,      // Ensure video is not muted
-                    'loop': 1,
-                    'playlist': 'tx1Qrped3L4'
-                },
+                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': 'tx1Qrped3L4' },
                 events: {
                     'onReady': onPlayerReady
                 }
@@ -112,6 +122,19 @@
             // Unmute video by default
             event.target.unMute();
         }
+
+        // JavaScript to handle mute/unmute functionality
+        const muteButton = document.getElementById('muteButton');
+
+        muteButton.addEventListener('click', () => {
+            if (player.isMuted()) {
+                player.unMute();
+                muteButton.textContent = 'Mute';
+            } else {
+                player.mute();
+                muteButton.textContent = 'Unmute';
+            }
+        });
     </script>
 </body>
 </html>
