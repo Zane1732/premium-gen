@@ -6,7 +6,6 @@
     <title>PREMIUM ACCOUNTS GEN BY ZANE</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Styles to ensure the video covers the whole background */
         body, html {
             margin: 0;
             padding: 0;
@@ -20,8 +19,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: -1; /* Ensure it stays behind other content */
-            opacity: 0.6; /* Adjust opacity if needed */
+            z-index: -1;
+            opacity: 0.6;
         }
 
         .container {
@@ -30,26 +29,15 @@
             /* Add other container styles */
         }
 
+        /* Hide the mute button */
         .mute-button {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background-color: #f00;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            padding: 10px;
-            cursor: pointer;
-            z-index: 1; /* Ensure it stays above the video */
+            display: none;
         }
     </style>
 </head>
 <body>
     <!-- Background Video -->
     <div id="video-container" class="background-video"></div>
-
-    <!-- Mute/Unmute Button -->
-    <button id="muteButton" class="mute-button">Mute</button>
 
     <div class="container">
         <h1>PREMIUM ACCOUNTS GEN BY ZANE</h1>
@@ -76,14 +64,10 @@
         </form>
 
         <div class="result" id="result"></div>
-
-        <div class="timer" id="timer"></div> <!-- Countdown timer display -->
-
+        <div class="timer" id="timer"></div>
         <div class="stock-info" id="stockInfo">
             <h2>Stock Information</h2>
-            <ul id="stockList">
-                <!-- Stock counts will be dynamically updated here -->
-            </ul>
+            <ul id="stockList"></ul>
         </div>
 
         <div class="restock" id="restockSection">
@@ -91,17 +75,16 @@
             <form id="restockForm">
                 <label for="restockPassword">Enter Restock Password:</label>
                 <input type="password" id="restockPassword" required>
-                
                 <label for="restockFileInput">Upload Restock File:</label>
                 <input type="file" id="restockFileInput" accept=".txt">
-                
                 <button type="submit" id="restockButton">Upload Accounts</button>
             </form>
             <div id="restockResult" class="result"></div>
         </div>
     </div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- Load YouTube IFrame API asynchronously -->
+    <script async src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
     <script>
         // JavaScript to handle video playback with YouTube IFrame API
@@ -111,7 +94,7 @@
                 height: '100%',
                 width: '100%',
                 videoId: 'tx1Qrped3L4',
-                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': 'tx1Qrped3L4' },
+                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': 'tx1Qrped3L4', 'mute': 0 },
                 events: {
                     'onReady': onPlayerReady
                 }
@@ -119,22 +102,8 @@
         }
 
         function onPlayerReady(event) {
-            // Unmute video by default
-            event.target.unMute();
+            event.target.unMute(); // Unmute video by default
         }
-
-        // JavaScript to handle mute/unmute functionality
-        const muteButton = document.getElementById('muteButton');
-
-        muteButton.addEventListener('click', () => {
-            if (player.isMuted()) {
-                player.unMute();
-                muteButton.textContent = 'Mute';
-            } else {
-                player.mute();
-                muteButton.textContent = 'Unmute';
-            }
-        });
     </script>
 </body>
 </html>
