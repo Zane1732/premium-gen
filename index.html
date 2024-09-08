@@ -56,6 +56,11 @@
         .result, .timer {
             margin-top: 15px;
         }
+
+        #passwordError {
+            color: red;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -69,9 +74,11 @@
         <h1>PREMIUM ACCOUNTS GEN BY ZANE</h1>
         <p>If you have any issues, you can contact me on Discord: <strong>zane_ox0</strong></p>
 
-        <form id="toolForm">
+        <!-- Account generation form -->
+        <form id="genForm">
             <label for="password">Enter Password:</label>
             <input type="password" id="password" required>
+            <p id="passwordError">Incorrect Password. Please try again.</p>
 
             <label for="accountType">Select Account Type:</label>
             <select id="accountType" required>
@@ -86,7 +93,6 @@
             </select>
 
             <button type="submit" id="generateButton">Generate Account</button>
-            <button type="button" id="regenButton" style="display: none;">Regenerate</button>
         </form>
 
         <div class="result" id="result"></div>
@@ -98,20 +104,6 @@
             <ul id="stockList">
                 <!-- Stock counts will be dynamically updated here -->
             </ul>
-        </div>
-
-        <div class="restock" id="restockSection">
-            <h2>Restock Section</h2>
-            <form id="restockForm">
-                <label for="restockPassword">Enter Restock Password:</label>
-                <input type="password" id="restockPassword" required>
-                
-                <label for="restockFileInput">Upload Restock File:</label>
-                <input type="file" id="restockFileInput" accept=".txt">
-                
-                <button type="submit" id="restockButton">Upload Accounts</button>
-            </form>
-            <div id="restockResult" class="result"></div>
         </div>
     </div>
 
@@ -133,6 +125,12 @@
             }
             isMuted = !isMuted;
         });
+
+        // Password validation
+        const correctPassword = "zanethegodcracking"; // Set the correct password here
+        const passwordInput = document.getElementById('password');
+        const passwordError = document.getElementById('passwordError');
+        const resultDiv = document.getElementById('result');
 
         // Account data stored manually in the script
         const stockData = {
@@ -162,25 +160,35 @@
         window.onload = displayStock;
 
         // Update stock after generating account
-        document.getElementById('toolForm').addEventListener('submit', (e) => {
+        document.getElementById('genForm').addEventListener('submit', (e) => {
             e.preventDefault();
 
             const accountType = document.getElementById('accountType').value;
+            const password = passwordInput.value;
             const accounts = stockData[accountType];
+
+            if (password !== correctPassword) {
+                // Show error if password is incorrect
+                passwordError.style.display = 'block';
+                return;
+            }
+
+            passwordError.style.display = 'none'; // Hide error message if password is correct
 
             if (accounts && accounts.length > 0) {
                 // Pop the first account from the stock
                 const account = accounts.shift();
 
                 // Display the generated account
-                document.getElementById('result').textContent = `Generated ${accountType} account: ${account}`;
+                resultDiv.textContent = `Generated ${accountType} account: ${account}`;
                 
                 // Update stock display
                 displayStock();
             } else {
-                document.getElementById('result').textContent = `No ${accountType} accounts left in stock.`;
+                resultDiv.textContent = `No ${accountType} accounts left in stock.`;
             }
         });
     </script>
 </body>
 </html>
+
