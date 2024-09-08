@@ -21,6 +21,14 @@
             z-index: 1;
             /* Add other container styles */
         }
+
+        .restock {
+            margin-top: 20px;
+        }
+
+        .stock-info {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -71,8 +79,7 @@
         </div>
     </div>
 
-    <!-- Load YouTube IFrame API asynchronously -->
-    <script async src="https://www.youtube.com/iframe_api"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="script.js"></script>
     <script>
         // JavaScript to handle video playback with YouTube IFrame API
@@ -86,8 +93,8 @@
                     'autoplay': 1,
                     'loop': 1,
                     'playlist': 'tx1Qrped3L4',
-                    'mute': 0, // Ensure audio is enabled
-                    'controls': 0 // Hide controls
+                    'mute': 0,
+                    'controls': 0
                 },
                 events: {
                     'onReady': onPlayerReady
@@ -96,7 +103,61 @@
         }
 
         function onPlayerReady(event) {
-            event.target.unMute(); // Unmute video by default
+            event.target.unMute();
+        }
+
+        // JavaScript to handle restock functionality
+        document.getElementById('restockForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const password = document.getElementById('restockPassword').value;
+            const fileInput = document.getElementById('restockFileInput');
+
+            if (password !== 'restock') {
+                alert('Incorrect restock password!');
+                return;
+            }
+
+            if (fileInput.files.length === 0) {
+                alert('Please select a file!');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const lines = text.split('\n');
+                const stock = {};
+
+                lines.forEach(line => {
+                    const [id, pass] = line.split(':');
+                    if (id && pass) {
+                        const accountType = document.getElementById('accountType').value;
+                        if (!stock[accountType]) {
+                            stock[accountType] = [];
+                        }
+                        stock[accountType].push({ id, pass });
+                    }
+                });
+
+                updateStockInfo(stock);
+                document.getElementById('restockResult').innerText = 'Stock uploaded successfully!';
+            };
+
+            reader.readAsText(file);
+        });
+
+        function updateStockInfo(stock) {
+            const stockList = document.getElementById('stockList');
+            stockList.innerHTML = '';
+
+            for (const [type, accounts] of Object.entries(stock)) {
+                const listItem = document.createElement('li');
+                listItem.innerText = `${type}: ${accounts.length} accounts`;
+                stockList.appendChild(listItem);
+            }
         }
     </script>
 </body>
