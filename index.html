@@ -67,7 +67,7 @@
         </div>
 
         <!-- Restock Section (Admin Only) -->
-        <div class="restock" id="restockSection" style="display: none;">
+        <div class="restock" id="restockSection">
             <h2>Restock Section</h2>
             <form id="restockForm">
                 <label for="restockPassword">Enter Restock Password:</label>
@@ -168,22 +168,43 @@
             }
         }
 
-        // Check if admin is logged in to show restock section
-        function checkAdminAccess() {
-            // Simple client-side check (not secure, for demonstration)
-            const adminPassword = prompt('Enter admin password:');
-            if (adminPassword === 'admin_password') { // Replace 'admin_password' with your actual password
-                document.getElementById('restockSection').style.display = 'block';
+        // Handle restock form submission
+        document.getElementById('restockForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const password = document.getElementById('restockPassword').value;
+            const fileInput = document.getElementById('restockFileInput');
+            
+            if (password !== 'restock') {
+                document.getElementById('restockResult').innerText = 'Invalid restock password!';
+                return;
             }
-        }
 
-        // Call function to check admin access
-        checkAdminAccess();
+            const formData = new FormData();
+            formData.append('restockFile', fileInput.files[0]);
+            formData.append('restockPassword', password);
+            
+            fetch('/uploadStock', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('restockResult').innerText = 'Stock uploaded successfully!';
+                    fetchStockInfo(); // Refresh stock info
+                } else {
+                    document.getElementById('restockResult').innerText = 'Failed to upload stock!';
+                }
+            })
+            .catch(error => {
+                console.error('Error uploading stock:', error);
+                document.getElementById('restockResult').innerText = 'Error uploading stock!';
+            });
+        });
 
         // Fetch stock information on page load
         fetchStockInfo();
     </script>
 </body>
 </html>
-
-
