@@ -124,29 +124,27 @@
             }
 
             const file = fileInput.files[0];
-            const reader = new FileReader();
+            const formData = new FormData();
+            formData.append('restockFile', file);
+            formData.append('password', password);
 
-            reader.onload = function(e) {
-                const text = e.target.result;
-                const lines = text.split('\n');
-                const stock = {};
-
-                lines.forEach(line => {
-                    const [id, pass] = line.split(':');
-                    if (id && pass) {
-                        const accountType = document.getElementById('accountType').value;
-                        if (!stock[accountType]) {
-                            stock[accountType] = [];
-                        }
-                        stock[accountType].push({ id, pass });
-                    }
-                });
-
-                updateStockInfo(stock);
-                document.getElementById('restockResult').innerText = 'Stock uploaded successfully!';
-            };
-
-            reader.readAsText(file);
+            fetch('/uploadStock', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateStockInfo(data.stock);
+                    document.getElementById('restockResult').innerText = 'Stock uploaded successfully!';
+                } else {
+                    document.getElementById('restockResult').innerText = 'Failed to upload stock!';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('restockResult').innerText = 'Error uploading stock!';
+            });
         });
 
         function updateStockInfo(stock) {
@@ -162,3 +160,4 @@
     </script>
 </body>
 </html>
+
