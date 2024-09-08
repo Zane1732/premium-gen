@@ -29,11 +29,27 @@
             z-index: 1;
             /* Add other container styles */
         }
+
+        .mute-button {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #f00;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 1; /* Ensure it stays above the video */
+        }
     </style>
 </head>
 <body>
     <!-- Background Video -->
-    <iframe class="background-video" src="https://www.youtube.com/embed/tx1Qrped3L4?autoplay=1&mute=1&loop=1&playlist=tx1Qrped3L4" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    <iframe id="background-video" class="background-video" src="https://www.youtube.com/embed/tx1Qrped3L4?autoplay=1&loop=1&playlist=tx1Qrped3L4" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+
+    <!-- Mute/Unmute Button -->
+    <button id="muteButton" class="mute-button">Mute</button>
 
     <div class="container">
         <h1>PREMIUM ACCOUNTS GEN BY ZANE</h1>
@@ -86,5 +102,23 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // JavaScript to handle mute/unmute functionality
+        const videoFrame = document.getElementById('background-video');
+        const muteButton = document.getElementById('muteButton');
+
+        let isMuted = false;
+
+        muteButton.addEventListener('click', () => {
+            if (isMuted) {
+                videoFrame.src = videoFrame.src.replace('mute=1', 'mute=0');
+                muteButton.textContent = 'Mute';
+            } else {
+                videoFrame.src = videoFrame.src.replace('mute=0', 'mute=1');
+                muteButton.textContent = 'Unmute';
+            }
+            isMuted = !isMuted;
+        });
+    </script>
 </body>
 </html>
