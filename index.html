@@ -27,7 +27,6 @@
         .container {
             position: relative;
             z-index: 1;
-            /* Add other container styles */
         }
 
         .mute-button {
@@ -40,7 +39,15 @@
             border-radius: 5px;
             padding: 10px;
             cursor: pointer;
-            z-index: 1; /* Ensure it stays above the video */
+            z-index: 1;
+        }
+
+        .stock-info {
+            margin-top: 20px;
+        }
+
+        .result, .timer {
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -119,6 +126,48 @@
             }
             isMuted = !isMuted;
         });
+
+        // Stock management
+        const stockData = {
+            steam: 10,
+            netflix: 8,
+            vpn: 5,
+            roblox: 7,
+            games: 3,
+            valorant: 12,
+            crunchyroll: 9,
+            random: 5
+        };
+
+        // Display stock information
+        function displayStock() {
+            const stockList = document.getElementById('stockList');
+            stockList.innerHTML = ''; // Clear previous stock list
+
+            for (const [accountType, count] of Object.entries(stockData)) {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${accountType.charAt(0).toUpperCase() + accountType.slice(1)}: ${count} accounts`;
+                stockList.appendChild(listItem);
+            }
+        }
+
+        // Call the function to display stock
+        window.onload = displayStock;
+
+        // Update stock after generating account
+        document.getElementById('toolForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const accountType = document.getElementById('accountType').value;
+            if (stockData[accountType] > 0) {
+                stockData[accountType]--;
+                displayStock();
+                document.getElementById('result').textContent = `Generated ${accountType} account!`;
+            } else {
+                document.getElementById('result').textContent = `No ${accountType} accounts left in stock.`;
+            }
+        });
     </script>
 </body>
 </html>
+
