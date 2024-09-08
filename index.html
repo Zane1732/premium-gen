@@ -95,7 +95,13 @@
                 height: '100%',
                 width: '100%',
                 videoId: 'tx1Qrped3L4',
-                playerVars: { 'autoplay': 1, 'loop': 1, 'playlist': 'tx1Qrped3L4' },
+                playerVars: {
+                    'autoplay': 1,
+                    'controls': 0,  // Hide controls
+                    'mute': 0,      // Ensure video is not muted
+                    'loop': 1,
+                    'playlist': 'tx1Qrped3L4'
+                },
                 events: {
                     'onReady': onPlayerReady
                 }
@@ -109,3 +115,4 @@
     </script>
 </body>
 </html>
+
