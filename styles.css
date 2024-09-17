@@ -1,10 +1,8 @@
-body {
-    font-family: 'Courier New', Courier, monospace;
+  font-family: 'Courier New', Courier, monospace;
     margin: 0;
     padding: 0;
     background-color: #000;
     color: #f00; /* Red text color */
-    perspective: 1500px; /* Enhanced perspective for stronger 3D effect */
 }
 
 .container {
@@ -14,22 +12,17 @@ body {
     background-color: rgba(0, 0, 0, 0.8);
     border: 2px solid #f00; /* Red border */
     border-radius: 15px;
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.7); /* Stronger red shadow */
-    perspective: 1500px; /* Deeper perspective for 3D effect */
-    transform-style: preserve-3d;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); /* Red shadow */
+    perspective:1500px; /* Add perspective for 3D effect */
 }
 
 h1, p {
     color: #f00; /* Red text color */
-    text-shadow: 3px 3px 10px rgba(255, 0, 0, 0.7); /* Add deeper shadow for 3D text */
-    transform: translateZ(10px); /* Slightly pop out the text */
 }
 
 label {
     display: block;
     margin: 10px 0 5px;
-    color: #f00; /* Red text */
-    text-shadow: 2px 2px 8px rgba(255, 0, 0, 0.7); /* Slight shadow for 3D look */
 }
 
 input[type="password"], input[type="number"], select, button, input[type="file"] {
@@ -40,13 +33,16 @@ input[type="password"], input[type="number"], select, button, input[type="file"]
     border-radius: 5px;
     background-color: #222;
     color: #f00; /* Red text color */
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); /* Deeper shadow for 3D effect */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+input[type="file"] {
+    padding: 10px;
+}
+
 input[type="password"]:focus, input[type="number"]:focus, select:focus, button:focus, input[type="file"]:focus {
-    transform: scale(1.08); /* Slightly larger scale on focus for 3D pop */
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8); /* Stronger shadow on focus */
+    transform: scale(1.05); /* Slightly scale up on focus */
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7); /* Enhance shadow on focus */
 }
 
 button {
@@ -56,12 +52,5 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); /* More pronounced shadow */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-button:hover {
-    transform: translateZ(10px) scale(1.1); /* Hover pop effect */
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.7); /* Enhanced hover shadow */
-}
-
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    transition
