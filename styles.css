@@ -13,7 +13,7 @@
     border: 2px solid #f00; /* Red border */
     border-radius: 15px;
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); /* Red shadow */
-    perspective:1500px; /* Add perspective for 3D effect */
+    perspective:1000px; /* Add perspective for 3D effect */
 }
 
 h1, p {
