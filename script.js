@@ -1,4 +1,4 @@
-const PASSWORD = "zanethegodcracker";
+const PASSWORD = "zane1234";
 const RESTOCK_PASSWORD = "restock"; // Password for restocking
 
 const ACCOUNTS = {
