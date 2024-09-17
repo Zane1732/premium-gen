@@ -1,4 +1,4 @@
-const PASSWORD = "u looking for the password man";
+const PASSWORD = "u looking for the password ma ok n";
 const RESTOCK_PASSWORD = "restock"; // Password for restocking
 
 const ACCOUNTS = {
